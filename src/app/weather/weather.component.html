@@ -1,0 +1,90 @@
+<div class="my-container">
+  <h1 class="text-center text-white">Weather App</h1>
+  <div class="btn-container row">
+    <label class="switch btn-color-mode-switch">
+      <input
+        value="1"
+        id="color_mode"
+        name="color_mode"
+        type="checkbox"
+        (click)="toggleUnits()"
+      />
+      <label
+        class="btn-color-mode-switch-inner"
+        data-off="°C"
+        data-on="°F"
+        for="color_mode"
+      ></label>
+    </label>
+  </div>
+
+  <form class="mt-3" (submit)="formSubmit($event)">
+    <div class="row align-items-center justify-content-center">
+      <div class="col text-center">
+        <h3 class="text-white">City :</h3>
+      </div>
+      <div class="col ml-1">
+        <label for="city-input" class="text-white text-center w-300">
+          <input
+            type="text"
+            name="cityText"
+            autocomplete="off"
+            class="form-control input"
+            id="city"
+            placeholder="Enter a City"
+        /></label>
+      </div>
+      <div class="mr-1 col mb-2 text-sm">
+        <button type="submit" class="btn btn-primary mt-2">
+          Search
+        </button>
+      </div>
+    </div>
+  </form>
+  <div
+    *ngIf="this.showAlert"
+    class="alert alert-warning alert-danger p-x-6 mt-3"
+    role="alert"
+  >
+    <strong>{{ this.tempName }} City wasn't found </strong>
+    <button
+      type="button"
+      class="close rounded p-x-6"
+      (click)="this.showAlert = false"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="card text-white bg-dark mt-3 border-#ccc border rounded">
+    <div class="card-header text-center">
+      <h2>{{ this.displayWeather.city }}</h2>
+      <p>
+        <img
+          [src]="this.displayWeather.iconURL"
+          alt="weather icon"
+          class="bg-white rounded w-50 h-50 p-1"
+        />
+      </p>
+    </div>
+    <div class="card-body">
+      <p class="card-text fs-5">Summery: {{ this.displayWeather.summery }}</p>
+      <p class="card-text fs-5">
+        Temperature: {{ this.displayWeather.temp }}
+        <span *ngIf="this.units === 'metric'; else fahrenheit">°C</span>
+        <ng-template #fahrenheit>°F</ng-template>
+      </p>
+      <p class="card-text fs-5">
+        Fells like: {{ this.displayWeather.feels_like }}
+        <span *ngIf="this.units === 'metric'; else fahrenheit">°C</span>
+        <ng-template #fahrenheit>°F</ng-template>
+      </p>
+      <p class="card-text fs-5">
+        Pressure: {{ this.displayWeather.pressure }} hPa
+      </p>
+      <p class="card-text fs-5">
+        Humidity: {{ this.displayWeather.humidity }} %
+      </p>
+    </div>
+  </div>
+</div>
